@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一頁式網站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            width: 15%;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            right: 0;
+        }
+
+        .sidebar button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .sidebar button:hover {
+            background-color: #555;
+        }
+
+        .content {
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* 隱藏溢出的內容 */
+        }
+
+        section {
+            display: none; /* 預設隱藏 */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            background-color: #f0f0f0;
+            width: 100%;
+            text-align: center;
+        }
+
+        section.active {
+            display: flex; /* 只有active的section會顯示 */
+        }
+
+        section:nth-child(odd) {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar left">
+        <!-- 左側切換按鈕 -->
+        <button data-section="1">區域 1</button>
+        <button data-section="2">區域 2</button>
+        <button data-section="3">區域 3</button>
+    </div>
+
+    <div class="content">
+        <!-- 中間顯示的區域 -->
+        <section id="section1" class="active">區域 1</section>
+        <section id="section2">區域 2</section>
+        <section id="section3">區域 3</section>
+    </div>
+
+    <div class="sidebar right">
+        <!-- 右側固定區域內容 -->
+        <h2>右側欄</h2>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.sidebar button');
+            const sections = document.querySelectorAll('section');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除所有區域的 active 類別
+                    sections.forEach(section => section.classList.remove('active'));
+
+                    // 獲取按鈕對應的 section id
+                    const sectionId = this.getAttribute('data-section');
+
+                    // 顯示對應的區域
+                    document.getElementById('section' + sectionId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
